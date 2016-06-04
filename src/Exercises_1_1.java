@@ -235,8 +235,37 @@ public class Exercises_1_1 {
 				
 		return result;
 	}
-	
+
+    public static void drawRandomConn(int N, double p)
+    {
+        StdDraw.setCanvasSize(640, 640);
+        StdDraw.setScale(-1.2, 1.2);
+        StdDraw.setPenRadius(0.05);
+        double[][] dotCoordinates = new double[N][2];
+        for(int i = 0; i < N; i++)
+        {
+            dotCoordinates[i][0] = Math.cos(2 * Math.PI * i/N);
+            dotCoordinates[i][1] = Math.sin(2 * Math.PI * i/N);
+            StdDraw.point(dotCoordinates[i][0], dotCoordinates[i][1]);
+        }
+
+        StdDraw.setPenRadius(0.005);
+        for(int i = 0; i < N - 1; i++)
+        {
+            for(int j = i + 1; j < N; j++)
+            {
+                if(StdRandom.bernoulli(p))
+                {
+                    StdDraw.line(
+                            dotCoordinates[i][0], dotCoordinates[i][1],
+                            dotCoordinates[j][0], dotCoordinates[j][1]);
+                }
+            }
+        }
+    }
+
 	public static void main(String[] args) {
+        drawRandomConn(25, 0.6);
 
     }
 }
