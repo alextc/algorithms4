@@ -15,15 +15,6 @@ public class Exercises_1_1 {
 		return s;
 	}
 	
-	/* Usage
-	 * int[][] m = new int[][]{
-			new int[] {1, 2}, 
-			new int[] {3, 4},
-			new int[] {5, 6}
-		};	
-					
-		int[][] t = transpose(m);
-	 */
 	public static int[][] transpose(int[][] m)
 	{
 		int n = m.length;
@@ -51,6 +42,53 @@ public class Exercises_1_1 {
 
 		return r;
 	}
+
+	public static double dot(double[] x, double[] y)
+    {
+        double result = 0;
+        if (x.length != y.length)
+            throw new RuntimeException("size of x must be equal size of y");
+
+        for(int i = 0; i < x.length; i++)
+        {
+            result = result + (x[i] * y[i]);
+        }
+
+        return result;
+    }
+
+    public static double[] getColumn(double[][] m, int colIdx)
+    {
+        double[] result = new double[m.length];
+        for(int i=0; i < m.length; i++)
+        {
+            result[i] = m[i][colIdx];
+        }
+
+        return result;
+    }
+
+    public static double[][] mult(double[][]a, double[][]b)
+    {
+        if(a[0].length != b.length)
+            throw new RuntimeException("A's number of column must match B's number of rows");
+
+        int n = a.length;
+        int m = b[0].length;
+        double[][] result = new double[n][m];
+
+        for(int i = 0; i < n; i++)
+        {
+            for(int j = 0; j < m; j++)
+            {
+                double[] row = a[i];
+                double[] col = getColumn(b, j);
+                result[i][j] = dot(row, col);
+            }
+        }
+
+        return result;
+    }
 
 	public static int pow2(int n)
 	{
@@ -95,12 +133,6 @@ public class Exercises_1_1 {
 		return Math.log(n) + ln(n-1);
 	}
 	
-	/* Usage
-	 * int[] a = new int[] {7, 2, 2, 8, 3, 2, 1, 6, 6, 0 };
-	   int[] h = histogram(a, 10);
-	   for (int i = 0; i < h.length; i++)
-			System.out.format("%d%n", h[i]);
-	 */
 	public static int[] histogram(int[] a, int m)
 	{
 		int[] result = new int[m];
@@ -202,23 +234,6 @@ public class Exercises_1_1 {
 		return gcd(q, r);
 	}
 
-    /*
-    Boolean[][] m = new Boolean[10][10];
-
-        for (int i = 0; i < m.length; i++) {
-            for (int j = 0; j < m[1].length; j++) {
-                if (AreRelativelyPrime(i, j)) m[i][j] = true;
-                else m[i][j] = false;
-            }
-        }
-
-        for (int i = 0; i < m.length; i++) {
-            for (int j = 0; j < m[1].length; j++) {
-                System.out.format("%-10b  ", m[i][j]);
-            }
-            System.out.format("%n");
-        }
-     */
     public static Boolean AreRelativelyPrime(int a, int b)
     {
         return gcd(a, b) == 1;
@@ -303,7 +318,27 @@ public class Exercises_1_1 {
     }
 
     public static void main(String[] args) {
-        double[] stream = new double[] {1.0, 1.1, 1.2, 1.2, 5.0, 6.0, 7.0, 9.0, 9.0, 9.0 };
-        Histogram(stream, 6, 0, 10);
+        double[][] a = new double[][]{
+                new double[] {1, 2, 3},
+                new double[] {3, 2, 1},
+                new double[] {2, 1, 3}
+        };
+
+        double[][] b = new double[][]{
+                new double[] {4, 5, 6},
+                new double[] {6, 5, 4},
+                new double[] {4, 6, 5}
+        };
+
+        double[][] m = mult(a, b);
+
+        for(int i = 0; i < a.length; i++)
+        {
+            for(int j = 0; j < b[1].length; j++)
+            {
+                System.out.format("%f ", m[i][j]);
+            }
+            System.out.println();
+        }
     }
 }
