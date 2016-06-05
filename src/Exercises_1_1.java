@@ -264,8 +264,46 @@ public class Exercises_1_1 {
         }
     }
 
-	public static void main(String[] args) {
-        drawRandomConn(25, 0.6);
+    public static void Histogram(double[] s, int N, double l, double r)
+    {
+        int[] buckets = new int[N];
 
+        for(int i = 0; i < s.length; i++)
+        {
+            int idx = GetInterval(s[i], N, l, r);
+            buckets[idx]++;
+        }
+
+        int maxCount = StdStats.max(buckets);
+        StdDraw.setCanvasSize(720, 512);
+        StdDraw.setXscale(l, r);
+        StdDraw.setYscale(0, maxCount);
+
+        double w = (r - l) / N;
+        for(int i =0; i < buckets.length; i++)
+        {
+            double x = l + (i + 0.5) * w;
+            double y = buckets[i] / 2.0;
+            double rw = 0.5 * w;
+            double rh = buckets[i] / 2.0;
+            StdDraw.filledRectangle(x, y, rw, rh);
+        }
+    }
+
+    public static int GetInterval(double v, int N, double l, double r)
+    {
+        if(v >= r)
+        {
+            StdOut.printf("Right must be greater than v");
+            return -1;
+        }
+
+        double step = (r - l) / N;
+        return  (int)((v - l) / step);
+    }
+
+    public static void main(String[] args) {
+        double[] stream = new double[] {1.0, 1.1, 1.2, 1.2, 5.0, 6.0, 7.0, 9.0, 9.0, 9.0 };
+        Histogram(stream, 6, 0, 10);
     }
 }
