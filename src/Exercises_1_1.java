@@ -354,28 +354,29 @@ public class Exercises_1_1 {
     }
 
     public static void main(String[] args) {
-        double[][] a = new double[][]{
-                new double[] {1, 2, 3},
-                new double[] {3, 2, 1},
-                new double[] {2, 1, 3}
-        };
 
-        /*
-        double[][] b = new double[][]{
-                new double[] {4, 5, 6},
-                new double[] {6, 5, 4},
-                new double[] {4, 6, 5}
-        };
+		int SIDES = 6;
+		double dist[] = new double[2*SIDES+1];
+		for (int i = 1; i <= SIDES; i++) {
+			for (int j = 1; j <= SIDES; j++) {
+				dist[i+j] += 1.0;
+			}
+		}
 
-        double[][] m = mult(a, b);
-        */
+		for (int k = 2; k < 2*SIDES ; k++) {
+			dist[k] /= 36.0;
+			System.out.format("%f ", dist[k]);
+		}
+		System.out.println();
 
-        double[] b = new double[]{ 4, 6, 5};
-        double[] m = mult(b, a);
+		int d[] = new int[2*SIDES+1];
+        int N = 1000000;
+		for (int i = 0; i < N; i++) {
+			d[StdRandom.uniform(1, 7) + StdRandom.uniform(1, 7)]++;
+		}
 
-        for(int i = 0; i < a.length; i++)
-        {
-            System.out.format("%f ", m[i]);
-        }
-    }
+		for (int i = 2; i < 2*SIDES ; i++) {
+			System.out.format("%.6f ", (d[i] / (double)N));
+		}
+	}
 }
