@@ -90,6 +90,42 @@ public class Exercises_1_1 {
         return result;
     }
 
+    public static double[] mult(double[][]a, double[]b)
+    {
+        if(a[0].length != b.length)
+            throw new RuntimeException("A's number of column must match B's number of rows");
+
+        int n = a.length;
+        double[] result = new double[n];
+
+        for(int i = 0; i < n; i++)
+        {
+            double[] row = a[i];
+            double[] col = b;
+            result[i] = dot(row, col);
+        }
+
+        return result;
+    }
+
+    public static double[] mult(double[]a, double[][]b)
+    {
+        if(a.length != b.length)
+            throw new RuntimeException("A's number of column must match B's number of rows");
+
+        int n = a.length;
+        double[] result = new double[n];
+
+        for(int i = 0; i < n; i++)
+        {
+            double[] row = a;
+            double[] col = getColumn(b, i);
+            result[i] = dot(row, col);
+        }
+
+        return result;
+    }
+
 	public static int pow2(int n)
 	{
 		int result = 1;
@@ -324,6 +360,7 @@ public class Exercises_1_1 {
                 new double[] {2, 1, 3}
         };
 
+        /*
         double[][] b = new double[][]{
                 new double[] {4, 5, 6},
                 new double[] {6, 5, 4},
@@ -331,14 +368,14 @@ public class Exercises_1_1 {
         };
 
         double[][] m = mult(a, b);
+        */
+
+        double[] b = new double[]{ 4, 6, 5};
+        double[] m = mult(b, a);
 
         for(int i = 0; i < a.length; i++)
         {
-            for(int j = 0; j < b[1].length; j++)
-            {
-                System.out.format("%f ", m[i][j]);
-            }
-            System.out.println();
+            System.out.format("%f ", m[i]);
         }
     }
 }
